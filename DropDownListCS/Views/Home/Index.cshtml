@@ -9,16 +9,41 @@
           <div class="form-group">
               @if(ViewBag.CountryList != null)
               {
-                  @Html.DropDownListFor(model => model.CountryID, ViewBag.CountryList as SelectList, "--Seleccione una Ciudad--", new { @class="form-control"})
+                  @Html.DropDownListFor(model => model.CountryId, ViewBag.CountryList as SelectList, "--Seleccione Pais--", new { @class="form-control"})
               }  
           </div>
+          <div class="form-group"> 
+                  @Html.DropDownListFor(model => model.StateId, new  SelectList(" "), "--Seleccione Estado--", new { @class = "form-control" })
+          </div>    
           <div class="form-group">
-
-                  @Html.DropDownListFor(model => model.StateId, new  SelectList(" "), "--Seleccione un Estado--", new { @class = "form-control" })
-       
+              @Html.DropDownListFor(model => model.CitiesId, new SelectList(" "), "--Seleccione Ciudad--", new { @class = "form-control" })
           </div>
-
-      </div>
-
+          
+      </div>   
 </div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    //Get Estado
+    $(document).ready(function () {
+        $("#CountryId").change(function () {
+            $.get("/Home/GetStateList", { CountryId: $("#CountryId").val() }, function (data) {
+                $("#StateId").empty();
+                $.each(data, function (index, row) {
+                    $("#StateId").append("<option value='" + row.state_id + "'>" + row.name + "</option>")
+                });
+            });
+        })
+    });
+    //Get Ciudad
+    $(document).ready(function () {
+        $("#StateId").change(function () {
+            $.get("/Home/GetCitiesList", { StateId: $("#StateId").val() }, function (data) {
+            $("#CitiesId").empty();
+            $.each(data, function (index, row) {
+                $("#CitiesId").append("<option value='" + row.id + "'>" + row.name + "</option>")
+            });
+        });
+    })
+    });
+</script>
 

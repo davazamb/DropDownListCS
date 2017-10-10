@@ -7,7 +7,9 @@ namespace DropDownListCS.Models
 {
     public class CountryStateViewModel
     {
-        public int StateId { get; set; }
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
+        public int StateId { get; set; }    
+        public int CitiesId { get; set; }    
+
     }
 }
